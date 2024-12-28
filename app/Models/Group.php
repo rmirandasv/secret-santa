@@ -12,7 +12,7 @@ class Group extends Model
         'organizer',
         'name',
         'slug',
-        'description',
+        'message',
         'gift_exchange_date',
         'budget',
     ];

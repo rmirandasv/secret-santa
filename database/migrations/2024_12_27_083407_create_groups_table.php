@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('organizer')->nullable();
             $table->string('name');
             $table->string('slug')->unique();
-            $table->string('description')->nullable();
+            $table->string('message')->nullable();
             $table->date('gift_exchange_date');
             $table->decimal('budget', 10, 2);
             $table->timestamps();
