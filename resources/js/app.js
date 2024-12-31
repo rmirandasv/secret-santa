@@ -1,8 +1,12 @@
-const newSecretSanta = () => ({
+window.Alpine.data('newSecretSanta', (wire) => ({
     step: 1,
-    participants: [{
-        name: '',
-    }],
+    isLoading: wire.entangle('isLoading'),
+    organizer: wire.entangle('organizer'),
+    name: wire.entangle('name'),
+    gift_exchange_date: wire.entangle('gift_exchange_date'),
+    budget: wire.entangle('budget'),
+    message: wire.entangle('message'),
+    participants: wire.entangle('participants'),
     next() {
         this.step++;
     },
@@ -23,6 +27,9 @@ const newSecretSanta = () => ({
 
         this.participants.splice(index, 1);
     },
+    addParticipant() {
+        this.participants.push({ name: '' });
+    },
     checkParticipants() {
         const lastParticipant = this.participants.pop();
         if (lastParticipant.name) {
@@ -32,6 +39,10 @@ const newSecretSanta = () => ({
             this.participants.push(lastParticipant);
         }
     },
-});
-
-window.newSecretSanta = newSecretSanta;
+    enableNext() {
+        return this.participants.filter(p => p.name.length > 0).length > 2;
+    },
+    enableSubmit() {
+        return this.organizer && this.name && this.gift_exchange_date && this.budget && this.enableNext();
+    }
+}));
