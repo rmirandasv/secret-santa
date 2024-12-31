@@ -9,29 +9,17 @@ use Livewire\Component;
 
 class ShowSecretSanta extends Component
 {
-    public SecretSantaForm $form;
-
-    public ParticipantForm $participantForm;
+    public Group $group;
 
     public function mount(Group $group)
     {
-        $this->form->fill($group);
-        $this->form->group = $group;
-    }
-
-    public function addParticipant()
-    {
-        $this->participantForm->store($this->form->group);
-    }
-
-    public function removeParticipant($participantId)
-    {
-        $this->form->group->participants()->find($participantId)->delete();
+        $this->group = $group;
     }
 
     public function render()
     {
-        $participants = $this->form->group->participants;
+        $participants = $this->group->participants;
+
         return view('livewire.pages.secret-santa.show-secret-santa', compact('participants'));
     }
 }
