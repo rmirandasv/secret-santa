@@ -1,8 +1,18 @@
 <div>
-  <div class="min-h-screen flex flex-col items-center justify-center">
+  <div class="flex flex-col">
+    <header class="bg-pink-500 text-white p-4">
+      <div class="max-w-4xl w-full mx-auto flex items-center justify-between">
+        <h1 class="text-2xl font-semibold">
+          Join {{ $group->name }}
+        </h1>
+        <span class="font-semibold">
+          {{ $group->gift_exchange_date }}
+        </span>
+      </div>
+    </header>
     <div class="max-w-4xl w-full mx-auto flex flex-col p-4">
       <h1 class="text-2xl font-semibold text-gray-800">
-        {{ $group->name }}
+        Join Secret Santa
       </h1>
       <span class="text-sm text-gray-600">
         Organizer: {{ $group->organizer }}
@@ -14,17 +24,13 @@
         Participants: {{ $group->participants->count() }}
       </span>
 
-      <h2 class="text-lg  text-gray-600">
-        Join Secret Santa
-      </h2>
-
       @if ($participantId)
         <span class="mt-4 text-2xl text-gray-800 font-bold">
           You are joining as {{ $participant->name }}
         </span>
         <button wire:click="revealSecretSanta"
           @disabled($secretSantaRevealed)
-          class="mt-10 p-4 bg-blue-500 text-white rounded-md shadow hover:bg-blue-600">
+          class="mt-10 p-4 bg-pink-500 text-white rounded-md shadow hover:bg-pink-600">
           {{ $secretSantaRevealed ? 'Secret Santa revealed' : 'Reveal Secret Santa' }}
         </button>
 
