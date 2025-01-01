@@ -28,8 +28,7 @@
         <span class="mt-4 text-2xl text-gray-800 font-bold">
           You are joining as {{ $participant->name }}
         </span>
-        <button wire:click="revealSecretSanta"
-          @disabled($secretSantaRevealed)
+        <button wire:click="revealSecretSanta" @disabled($secretSantaRevealed)
           class="mt-10 p-4 bg-pink-500 text-white rounded-md shadow hover:bg-pink-600">
           {{ $secretSantaRevealed ? 'Secret Santa revealed' : 'Reveal Secret Santa' }}
         </button>
@@ -64,4 +63,11 @@
       @endif
     </div>
   </div>
+  @script
+    <script>
+      $wire.on('secret-santa-revealed', () => {
+        window.JSConfetti.addConfetti();
+      });
+    </script>
+  @endscript
 </div>

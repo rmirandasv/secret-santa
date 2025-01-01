@@ -35,6 +35,8 @@ class JoinSecretSanta extends Component
         $this->secretSanta = $matchSecretSanta->handle($this->group, $this->participantId);
 
         $this->secretSantaRevealed = true;
+
+        $this->dispatch('secret-santa-revealed');
     }
 
     public function render()

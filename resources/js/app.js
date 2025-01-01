@@ -1,3 +1,7 @@
+import JSConfetti from 'js-confetti';
+
+window.JSConfetti = new JSConfetti();
+
 window.Alpine.data('newSecretSanta', (wire) => ({
     step: 1,
     isLoading: wire.entangle('isLoading'),

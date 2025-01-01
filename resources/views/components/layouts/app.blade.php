@@ -10,5 +10,6 @@
     <body class="min-h-screen flex flex-col antialiased bg-gray-200">
         <x-navigation />
         {{ $slot }}
+        @stack('scripts')
     </body>
 </html>
