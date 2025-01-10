@@ -22,6 +22,10 @@ class Group extends Model
         'gift_exchange_date' => 'date',
     ];
 
+    protected $casts = [
+        'gift_exchange_date' => 'date',
+    ];
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);

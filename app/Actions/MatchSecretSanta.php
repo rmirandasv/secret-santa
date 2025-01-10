@@ -9,22 +9,28 @@ class MatchSecretSanta
 {
     public function handle(Group $group, $participantId): Participant
     {
-        $pared = Participant::where('group_id', $group->id)
+        $hasSecretSanta = Participant::where('group_id', $group->id)
             ->whereNotNull('secret_santa_id')
             ->pluck('secret_santa_id')
             ->toArray();
 
-        $match = Participant::where('group_id', $group->id)
-            ->whereNotIn('id', $pared)
+        $matches = Participant::where('group_id', $group->id)
+            ->whereNotIn('id', $hasSecretSanta)
             ->where('id', '!=', $participantId)
-            ->get()
-            ->random();
+            ->get();
 
-        Participant::find($participantId)->update([
-            'secret_santa_id' => $match->id,
-        ]);
+        if ($matches->count() === 2) {
+            $matches = $matches->filter(function ($match) use ($participantId) {
+                return $match->secret_santa_id !== $participantId;
+            });
+        }
+
+        $match = $matches->random();
+
+        $participant = Participant::find($participantId);
+        $participant->secret_santa_id = $match->id;
+        $participant->save();
 
         return $match;
-
     }
 }
