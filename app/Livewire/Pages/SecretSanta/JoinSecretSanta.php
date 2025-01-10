@@ -6,7 +6,9 @@ use App\Actions\MatchSecretSanta;
 use App\Models\Group;
 use App\Models\Participant;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Blade;
 use Livewire\Component;
+use Spatie\Browsershot\Browsershot;
 
 class JoinSecretSanta extends Component
 {
@@ -37,6 +39,21 @@ class JoinSecretSanta extends Component
         $this->secretSantaRevealed = true;
 
         $this->dispatch('secret-santa-revealed');
+    }
+
+    public function download()
+    {
+        $image = storage_path(sprintf('app/public/secret-santa-%s.jpg', $this->participantId));
+
+        Browsershot::html(Blade::render('components.download-secret-santa', [
+            'group' => $this->group,
+            'participant' => Participant::find($this->participantId),
+        ]))
+        ->newHeadless()
+        ->showBackground()
+        ->save($image);
+
+        return response()->download($image)->deleteFileAfterSend(true);
     }
 
     public function render()
