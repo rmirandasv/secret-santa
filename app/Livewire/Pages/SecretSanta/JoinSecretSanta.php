@@ -49,6 +49,8 @@ class JoinSecretSanta extends Component
             'group' => $this->group,
             'participant' => Participant::find($this->participantId),
         ]))
+        ->setChromePath('/snap/bin/chromium')
+        ->setCustomTempPath(storage_path())
         ->newHeadless()
         ->showBackground()
         ->save($image);
